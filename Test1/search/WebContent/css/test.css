@@ -1,0 +1,12 @@
+body{
+    text-align: center;
+}
+
+#search{
+    display: block;
+    position: absolute;
+    border: 1px solid red;
+    width: 100px;
+    height: 50px;
+    left: 50%;
+}
