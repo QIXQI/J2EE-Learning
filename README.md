@@ -9,4 +9,4 @@ J2EE studies
 ## Test2/Search22
    by vscode(与eclipse的工作目录结构有所不同，vscode真的爽)
    
-   第二次是在第一次的基础上添加了分页管理并且可以更改每页的搜索最大搜索条数，search的内容每次存储在session中，以便页面跳转的时候可以获取search的内容
+   第二次是在第一次的基础上添加了分页管理并且可以更改每页的最大搜索条数，search的内容每次存储在session中，以便页面跳转的时候可以获取search的内容
