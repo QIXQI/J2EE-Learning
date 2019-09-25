@@ -1,0 +1,38 @@
+#content{
+    padding: 50px 0;
+    display: block;
+    font: 16px/24px Lato, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    color: #444;
+    text-align: center;
+}
+
+.wrapper{
+    display: block;
+    position: relative;
+    text-align: left;
+    margin: 0 auto;
+    padding: 0 10px;
+    width: 800px;
+}
+
+.wrapper:after{
+    content: "\0020";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    overflow: hidden;
+}
+
+pre{
+    line-height: 1.25;
+    white-space: pre;
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", Courier, monospace;
+    margin: 15px 0;
+    border: 0;
+    padding: 0;
+    display: block;
+    
+
+}
+

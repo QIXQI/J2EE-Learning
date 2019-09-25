@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8" />
+        <title>search</title>
+        <link rel="stylesheet" href="./css/search.css" type="text/css" />
+    </head>
+    <body>
+        <form action="http://localhost:8080/search22/Search" method="GET">
+            <div class="search_name">
+                <label>
+                    <span style="color: rgb(60, 122, 252);">软</span>
+                    <span style="color: rgb(251, 38, 10);">院</span>
+                    <span style="color: rgb(255, 190, 0);">找</span>
+                    <span style="color: rgb(60, 122, 252);">人</span>
+                </label>
+            </div>
+            <div id="search_father">
+                <div id="search">
+                    <div class="search_empty"></div>
+                    <div class="search_content">
+                        <!-- <div class="content_emppty"></div> -->
+                        <input type="text" name="searchContent" />
+                    </div>
+                </div>
+                <button type="submit" aria-label="软院查人" class="search_go">
+                    <div class="search_icon">
+                        <span>
+                            <svg focusable="false" xmls="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 
+                                16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01
+                                14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                            </svg>
+                        </span>
+                    </div>
+                </button>
+            </div>
+        </form>
+        <div id="itemsPerPage">
+            <label for="pageSelect"><span>每页条数：</span></label>
+            <select name="itemsPerPage" id="pageSelect">
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8" selected>8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+            </select>
+        </div>
+        <div class="search_result">
+            <!-- <input type="text" id="editMsg" name="editMsg" /> -->
+            <label class="result_title"><span>查找结果如下所示(81条)</span></label>
+            <table>
+                <tbody>
+                    <tr><td>学号（教工号）</td><td>姓名</td><td>手机号</td><td>QQ</td><td>邮箱</td></tr>
+                    <tr><td>201792235</td><td>张枫</td><td>18742024105</td><td>250012</td><td>250012qq.com</td></tr>
+                    <tr><td>201792280</td><td>唐涛</td><td>18742024107</td><td>250013</td><td>250013qq.com</td></tr>
+                    <tr><td>201792209</td><td>刘安福</td><td>18742024108</td><td>250014</td><td>250014qq.com</td></tr>
+                    <tr><td>201792104</td><td>朱雪宁</td><td>18742024109</td><td>250015</td><td>250015qq.com</td></tr>
+                    <tr><td>201792092</td><td>吴将凯</td><td>18742024110</td><td>250016</td><td>250016qq.com</td></tr>
+                    <tr><td>201792448</td><td>刘家瑜</td><td>18742024111</td><td>250017</td><td>250017qq.com</td></tr>
+                    <tr><td>201792496</td><td>胡小涛</td><td>18742024112</td><td>250018</td><td>250018qq.com</td></tr>
+                    <tr><td>201792144</td><td>李静</td><td>18742024113</td><td>250019</td><td>250019qq.com</td></tr>
+                    <tr><td>201792192</td><td>寇梦雅</td><td>18742024114</td><td>250020</td><td>250020qq.com</td></tr>
+                    <tr><td>201792246</td><td>孟宪彪</td><td>18742024115</td><td>250021</td><td>250021qq.com</td></tr>
+                    <tr><td>201792007</td><td>衣泽民</td><td>18742024116</td><td>250022</td><td>250022qq.com</td></tr>
+                    <tr><td>201792160</td><td>孙依茗</td><td>18742024117</td><td>250023</td><td>250023qq.com</td></tr>
+                    <tr><td>201792080</td><td>樊元新</td><td>18742024118</td><td>250024</td><td>250024qq.com</td></tr>
+                    <tr><td>201792437</td><td>崔国繁</td><td>18742024119</td><td>250025</td><td>250025qq.com</td></tr>
+                    <tr><td>201792097</td><td>邹迎童</td><td>18742024120</td><td>250026</td><td>250026qq.com</td></tr>
+                    <tr><td>201792101</td><td>刘立刚</td><td>18742024121</td><td>250027</td><td>250027qq.com</td></tr>
+                    <tr><td>201792091</td><td>张宇轩</td><td>18742024122</td><td>250028</td><td>250028qq.com</td></tr>
+                    <tr><td>201792200</td><td>李达</td><td>18742024123</td><td>250029</td><td>250029qq.com</td></tr>
+                    <tr><td>201792307</td><td>刘海东</td><td>18742024124</td><td>250030</td><td>250030qq.com</td></tr>
+                    <tr><td>201792064</td><td>韩亮</td><td>18742024125</td><td>250031</td><td>250031qq.com</td></tr>
+                    <tr><td>201792130</td><td>吕存驰</td><td>18742024126</td><td>250032</td><td>250032qq.com</td></tr>
+                    <tr><td>201792492</td><td>李秉轩</td><td>18742024127</td><td>250033</td><td>250033qq.com</td></tr>
+                    <tr><td>201792366</td><td>苗永铸</td><td>18742024128</td><td>250034</td><td>250034qq.com</td></tr>
+                    <tr><td>201792262</td><td>李欢</td><td>18742024129</td><td>250035</td><td>250035qq.com</td></tr>
+                    <tr><td>201792408</td><td>张壬泓</td><td>18742024130</td><td>250036</td><td>250036qq.com</td></tr>
+                    <tr><td>201792015</td><td>黄万鸿</td><td>18742024131</td><td>250037</td><td>250037qq.com</td></tr>
+                    <tr><td>201792428</td><td>吴征阳</td><td>18742024132</td><td>250038</td><td>250038qq.com</td></tr>
+                    <tr><td>201792488</td><td>肖晶菁</td><td>18742024133</td><td>250039</td><td>250039qq.com</td></tr>
+                    <tr><td>201792205</td><td>孟青</td><td>18742024134</td><td>250040</td><td>250040qq.com</td></tr>
+                    <tr><td>201792042</td><td>娄凯</td><td>18742024135</td><td>250041</td><td>250041qq.com</td></tr>
+                    <tr><td>201792292</td><td>张煜明</td><td>18742024136</td><td>250042</td><td>250042qq.com</td></tr>
+                    <tr><td>201792394</td><td>胡婉菁</td><td>18742024137</td><td>250043</td><td>250043qq.com</td></tr>
+                    <tr><td>201792060</td><td>孙小汐</td><td>18742024138</td><td>250044</td><td>250044qq.com</td></tr>
+                    <tr><td>201792223</td><td>曾志敏</td><td>18742024139</td><td>250045</td><td>250045qq.com</td></tr>
+                    <tr><td>201792195</td><td>冯嘉伟</td><td>18742024140</td><td>250046</td><td>250046qq.com</td></tr>
+                    <tr><td>201792443</td><td>吴松涛</td><td>18742024141</td><td>250047</td><td>250047qq.com</td></tr>
+                    <tr><td>201792037</td><td>吕骏飞</td><td>18742024142</td><td>250048</td><td>250048qq.com</td></tr>
+                    <tr><td>201792337</td><td>王虓</td><td>18742024143</td><td>250049</td><td>250049qq.com</td></tr>
+                    <tr><td>201792257</td><td>庞世宇</td><td>18742024144</td><td>250050</td><td>250050qq.com</td></tr>
+                    <tr><td>201792175</td><td>郭圆圆</td><td>18742024145</td><td>250051</td><td>250051qq.com</td></tr>
+                    <tr><td>201792184</td><td>冯威</td><td>18742024146</td><td>250052</td><td>250052qq.com</td></tr>
+                    <tr><td>201792146</td><td>崔成屹</td><td>18742024147</td><td>250053</td><td>250053qq.com</td></tr>
+                    <tr><td>201792454</td><td>吴杉</td><td>18742024148</td><td>250054</td><td>250054qq.com</td></tr>
+                    <tr><td>201792484</td><td>赵启轩</td><td>18742024149</td><td>250055</td><td>250055qq.com</td></tr>
+                    <tr><td>201792393</td><td>范霆昱</td><td>18742024150</td><td>250056</td><td>250056qq.com</td></tr>
+                    <tr><td>201792154</td><td>赵宇鹏</td><td>18742024151</td><td>250057</td><td>250057qq.com</td></tr>
+                    <tr><td>201792487</td><td>张浩天</td><td>18742024152</td><td>250058</td><td>250058qq.com</td></tr>
+                    <tr><td>201792179</td><td>郑翔</td><td>18742024153</td><td>250059</td><td>250059qq.com</td></tr>
+                    <tr><td>201792265</td><td>倪宏秋</td><td>18742024154</td><td>250060</td><td>250060qq.com</td></tr>
+                    <tr><td>201792470</td><td>陈维哲</td><td>18742024155</td><td>250061</td><td>250061qq.com</td></tr>
+                    <tr><td>201792159</td><td>林帅浩</td><td>18742024156</td><td>250062</td><td>250062qq.com</td></tr>
+                    <tr><td>201741208</td><td>潘宇航</td><td>18742024157</td><td>250063</td><td>250063qq.com</td></tr>
+                    <tr><td>201741209</td><td>张枫</td><td>18742024158</td><td></td><td></td></tr>
+                    <tr><td>201741210</td><td>唐涛</td><td>18742024159</td><td></td><td></td></tr>
+                    <tr><td>201741211</td><td>刘安福</td><td>18742024160</td><td></td><td></td></tr>
+                    <tr><td>201741212</td><td>朱雪宁</td><td>18742024161</td><td></td><td></td></tr>
+                    <tr><td>201741213</td><td>吴将凯</td><td>18742024162</td><td></td><td></td></tr>
+                    <tr><td>201741214</td><td>刘家瑜</td><td>18742024163</td><td></td><td></td></tr>
+                    <tr><td>201741215</td><td>胡小涛</td><td>18742024164</td><td></td><td></td></tr>
+                    <tr><td>201741216</td><td>李静</td><td>18742024165</td><td></td><td></td></tr>
+                    <tr><td>201741217</td><td>寇梦雅</td><td>18742024166</td><td></td><td></td></tr>
+                    <tr><td>201741218</td><td>孟宪彪</td><td>18742024167</td><td></td><td></td></tr>
+                    <tr><td>201741219</td><td>衣泽民</td><td>18742024168</td><td></td><td></td></tr>
+                    <tr><td>201741220</td><td>孙依茗</td><td>18742024169</td><td></td><td></td></tr>
+                    <tr><td>201741221</td><td>樊元新</td><td>18742024170</td><td></td><td></td></tr>
+                    <tr><td>201741222</td><td>崔国繁</td><td>18742024171</td><td></td><td></td></tr>
+                    <tr><td>201741223</td><td>邹迎童</td><td>18742024172</td><td></td><td></td></tr>
+                    <tr><td>201741224</td><td>刘立刚</td><td>18742024173</td><td></td><td></td></tr>
+                    <tr><td>201741225</td><td>张宇轩</td><td>18742024174</td><td></td><td></td></tr>
+                    <tr><td>201741226</td><td>李达</td><td>18742024175</td><td></td><td></td></tr>
+                    <tr><td>201741227</td><td>刘海东</td><td>18742024176</td><td></td><td></td></tr>
+                    <tr><td>201741228</td><td>韩亮</td><td>18742024177</td><td></td><td></td></tr>
+                    <tr><td>201741229</td><td>吕存驰</td><td>18742024178</td><td></td><td></td></tr>
+                    <tr><td>201892179</td><td>张三feng</td><td>19842024106</td><td>350012</td><td>350012qq.com</td></tr>
+                    <tr><td>201892180</td><td>张三吗</td><td>19842024107</td><td>350013</td><td>350013qq.com</td></tr>
+                    <tr><td>201892181</td><td>张三使得</td><td>19842024108</td><td>350014</td><td>350014qq.com</td></tr>
+                    <tr><td>201892182</td><td>张三欧</td><td>19842024109</td><td>350015</td><td>350015qq.com</td></tr>
+                    <tr><td>201892183</td><td>张三</td><td>19842024110</td><td>350016</td><td>350016qq.com</td></tr>
+                    <tr><td>201892184</td><td>张三</td><td>19842024111</td><td>350017</td><td>350017qq.com</td></tr>
+                    <tr><td>201892185</td><td>张三三</td><td>19842024112</td><td>350018</td><td>350018qq.com</td></tr>
+                    <tr><td>201892186</td><td>哟张三</td><td>19842024113</td><td>350019</td><td>350019qq.com</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="pages">
+            <table>
+                <tbody><tr>
+                    <td><a class="pageUpDown" aria-label="PrePage" href="">上一页</a></td>
+                    <td><a class="pageNum" aria-label="Page1" href="./Search?page=1">1</a></td>
+                    <td><a class="pageNum" aria-label="Page2" href="./Search?page=2">2</a></td>
+                    <td><a class="pageNum" aria-label="Page3" href="./Search?page=3">3</a></td>
+                    <td><a class="pageNum" aria-label="Page4" href="./Search?page=4">4</a></td>
+                    <td><a class="pageNum" aria-label="Page5" href="./Search?page=5">5</a></td>
+                    <td><span class="pageLeave">...</span></td>
+                    <td><a class="pageLast" aria-label="PageLast" href="./Search?page=9">9</a></td>
+                    <td><a class="pageUpDown" aria-label="NextPage" href="">下一页</a></td>
+                </tr></tbody>
+            </table>
+        </div>
+        <script type="text/javascript" src="./javascript/search.js"></script>
+    </body>
+</html>
