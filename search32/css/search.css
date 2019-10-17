@@ -1,0 +1,370 @@
+/*
+    .delete 中的 border-bottom: none; 在面对 #search_result table td 中的 border-bottom: 1px solid rgb(33, 33, 33); 无效
+*/
+
+
+body{
+    font-size: small;
+    color: #222;
+    font-family: arial, sans-serif;
+    text-align: center;
+}
+
+.search_name{
+    position: absolute;
+    display: block;
+    color: rgb(33, 33, 33);
+    height: 40px;
+    width: 100px;
+    margin-top: 3px;
+    margin-left: 13px;
+    padding-top: 5px;
+    font-size: 0;
+    opacity: 0.5;
+}
+
+.search_name span{
+    font-size: 20px;
+}
+
+#search_father{
+    background: #fff;
+    display: flex;
+    border: 1px solid #dfe1e5;
+    box-shadow: none;
+    width: 638px;
+    height: 44px;
+    border-radius: 24px;
+    z-index: 3;
+    /* margin: 0 auto; */
+    margin-left: 138px;
+    margin-top: 20px;
+}
+
+#search_father:hover{
+    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+    border-color: rgba(223, 225, 229, 0);
+}
+
+#search_father:focus{
+    outline-color: -webkit-focus-ring-color;
+    outline-style: auto;
+    outline-width: 5px;
+}
+
+#search{
+    flex: 1;
+    display: flex;
+    padding: 5px 4px 0 16px;
+    padding-left: 14px;
+}
+
+/* #search .search_empty{
+    display: flex;
+    align-items: center;
+    padding-right: 6px;
+    margin-top: -7px;
+    color: #222;
+} */
+
+.search_content{
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    color: #222;
+    font-family: arial, sans-serif;
+    font-size: 14px;
+}
+
+.search_content .content_empty{
+    color: transparent;
+    flex: 100%;
+    white-space: pre;
+    font: 17px arial, sans-serif;
+    line-height: 34px;
+    height: 34px !important;
+    display: block;
+}
+
+.search_content input{
+    background-color: transparent;
+    /* background-color: yellow; */
+    border: none;
+    margin: 0;
+    padding: 0;
+    color: rgba(0, 0, 0, .87);
+    word-wrap: break-word;
+    outline: none;
+    display: flex;
+    flex: 100%;
+    margin-top: 0px;
+    font: 17px arial, sans-serif;
+    line-height: 34px;
+    height: 34px !important;
+    /* width: 100%; */
+    cursor: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    text-align: start;
+    writing-mode: horizontal-tb;
+    caret-color: rgba(0, 0, 0, .87);
+}
+
+#search_father .search_go{
+    flex: 0 0 auto;
+    padding-right: 13px;
+    border-radius: 0;
+    height: 44px;
+    width: 44px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#search_father .search_go:focus{
+    outline: none;
+}
+
+.search_go .search_icon{
+    background: none;
+    color: #4285f4;
+    height: 24px;
+    width: 24px;
+    margin: auto;
+    display: block;
+}
+
+.search_go .search_icon:focus{
+    outline-style: auto;
+    outline-width: 5px;
+}
+
+.search_go .search_icon span{
+    display: inline-block;
+    fill: currentColor;
+    height: 24px;
+    line-height: 24px;
+    position: relative;
+    width: 24px;
+}
+
+.search_go .search_icon span:focus{
+    outline-style: auto;
+    outline-width: 5px;
+}
+
+.search_go .search_icon svg{
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.search_go .search_icon svg:not(:root){
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.search_go .search_icon svg:focus{
+    outline-style: auto;
+    outline-width: 5px;
+}
+
+.search_go .search_icon svg path:not(svg){
+    transform-origin-x: 0px;
+    transform-origin-y: 0px;
+    transform-box: view-box;
+}
+
+.search_go .search_icon svg path:focus{
+    outline-style: auto;
+    outline-width: 5px;
+}
+
+.search_result{
+	text-align: left;
+	margin-top: 35px;
+	padding-left: 120px;
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-style: italic;
+	font-size: 20px;
+}
+
+/*.search_result label{
+	margin-top: 5px;
+	display: block;
+}*/
+
+.search_result .result_title{
+	margin-left: 260px;
+	margin-bottom: 20px;
+}
+
+.search_result table{
+	/* border-right: 1px solid rgb(33, 33, 33); */
+	/* border-top: 1px solid rgb(33, 33, 33); */
+	text-align: center;
+	width: 780px;
+	margin-top: 20px;
+}
+
+/* not 排除选择器 */
+.search_result table td:not(.delete):not(.add_submit){
+    height: 28px;
+	border-left: 1px solid rgb(68, 45, 45);
+	border-bottom: 1px solid rgb(33, 33, 33);
+}
+
+/* table 最上方的边框 */
+.search_result table tr:first-child td:not(.delete){
+    border-top: 1px solid rgb(33, 33, 33);
+}
+
+/* 填充 delete.png 的单元格 */
+.delete{
+    border-left: 1px solid rgb(33, 33, 33);
+}
+
+/* 设置 delete.png 的样式 */
+.delete img{
+    width: 20px;
+    height: 20px;
+}
+
+.delete:not(.start_tr):hover{
+    cursor: pointer;
+}
+
+
+.search_result .editMsg{
+    font-size: 20px;
+    font-style: italic;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+    color: #fc6423;
+}
+
+/* 修改提示信息样式 */
+.search_result .editMsg::-webkit-input-placeholder{
+    font-size: 18px;
+}
+
+.search_result .editMsg:-moz-placeholder{
+    font-size: 18px;
+}
+
+.search_result .editMsg::-moz-placeholder{
+    font-size: 18px;
+}
+
+.search_result .editMsg:-ms-input-placeholder{
+    font-size: 18px;
+}
+
+.search_result .addMsg{
+    font-size: 20px;
+    font-style: italic;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+    color: #fc6423;
+    border: none;
+}
+
+/* 修改提示信息样式 */
+.search_result .addMsg::-webkit-input-placeholder{
+    font-size: 18px;
+}
+
+.search_result .addMsg:-moz-placeholder{
+    font-size: 18px;
+}
+
+.search_result .addMsg::-moz-placeholder{
+    font-size: 18px;
+}
+
+.search_result .addMsg:-ms-input-placeholder{
+    font-size: 18px;
+}
+
+
+#pages{
+    display: block;
+    position: relative;
+    margin-top: 60px;
+    margin-bottom: 80px;
+    font-family: arial, sans-serif;
+    font-size: 16px;
+}
+
+
+#pages table{
+    margin-left: 280px;
+}
+
+#pages table td a{
+    color: #0593d3;
+    text-decoration: none;
+    /* border-bottom: 1px solid #0593d3; */
+}
+
+#pages table td a:hover{
+    color: #fc6423;
+    text-decoration: underline;
+    /* border-bottom: 1px solid #fc6423; */
+}
+
+#pages table td .pageNum{
+    margin-left: 10px;
+}
+
+#pages table td .pageUpDown{
+    margin-left: 40px;
+    margin-right: 40px;     /* 30px + 20px = 50px 天才 */
+}
+
+#pages table .pageLeave{
+    color: #0593d3;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#itemsPerPage{
+    text-align: left;
+    width: 200px;
+    height: 50px;
+    display: block;
+    position: absolute;
+    margin-left: 150px;
+    margin-top: 50px;
+}
+
+
+
+/* add.png 的样式 */
+.add{
+    width: 20px;
+    height: 20px;
+    margin-top: 3px;
+}
+
+.add:hover{
+    cursor: pointer;
+}
+
+/* add_submit.png 的样式 */
+.add_submit{
+    border-left: 1px solid rgb(33, 33, 33);
+}
+
+.add_submit img{
+    width: 20px;
+    height: 20px;
+}
+
+.add_submit:hover{
+    cursor: pointer;
+}
