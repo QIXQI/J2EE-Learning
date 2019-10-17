@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8" />
+        <title>search</title>
+        <link rel="stylesheet" href="./css/index.css" type="text/css" />
+    </head>
+    <body>
+        <div id="header">
+            <!-- 实现登录 -->
+            <div id="info">
+                <img src="images/info.png" alt="个人中心" title="个人中心" />
+            </div>
+        </div>
+        <form action="http://localhost:8080/search32/Search" method="GET">
+            <div id="search_top">
+                <label>
+                    <span style="color: rgb(60, 122, 252);">软</span>
+                    <span style="color: rgb(251, 38, 10);">院</span>
+                    <span style="color: rgb(255, 190, 0);">找</span>
+                    <span style="color: rgb(60, 122, 252);">人</span>
+                </label>
+            </div>
+            <div id="search">
+                <div class="search_icon">
+                    <span>
+                        <svg focusable="false" xmls="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                            <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 
+                            16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01
+                            14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                        </svg>
+                    </span>
+                </div>
+                <div class="search_content">
+                    <div class="search_empty"></div>
+                    <input type="text" name="searchContent" />
+                    <div id="camera">
+                        <img src="images/camera.png" alt="图片搜索" title="图片搜索" />
+                    </div>
+                </div>
+            </div>
+            <div id="search_bottom">
+                <input value="开始查找" aria-label="开始查找" type="submit" />
+            </div>
+        </form>
+        
+        <!-- start of 空白元素 -->
+        <div class="empty">
+            <div id="empty_file" style="display: none">
+                <form method="POST" name="upload" id="upload" action="/search32/IconUpload" enctype="multipart/form-data">
+                    <input type="file" class="fileupload" name="uploadFile" style="display: none" />
+                </form>
+            </div>
+        </div>
+        <!-- end of 空白元素 -->
+        <script type="text/javascript" src="./javascript/index.js"></script>
+    </body>
+</html>
