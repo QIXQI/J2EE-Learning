@@ -6,4 +6,5 @@
 5. 增删改查放在一起？接收 method=add/delete/edit/search 
 6. 代码结构需要调整
 7. admin.jsp 中的分页逻辑使用 JavaBean 完成
+8. ajax 调用后台时，后台异常处理部分有些问题，比如插入用户，id已经存在，此时ajax传送不会抛出 SQLException（头痛）
 
