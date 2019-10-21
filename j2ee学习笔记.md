@@ -10,6 +10,20 @@
     8. attribute, context, config
     9.getServletConfig().getInitParameter("cnofig");
     10.org.apache.struts.actions.DispatchAction(源代码）
+    11.考试题：两个代码性能分析对比（简单题）
+    12.考试重点: Servlet, Listener, Filter, JSP, Tag, ServletConfig, ServletContext;
+    13. 重重点： Servlet, ServletConfig
+    14. 声明周期： getInitParameter()
+    15. request.getParameter()
+    16. 10月12日 周四 上传文件（反射机制），要考
+    17. 选择题、填空题、问答题
+    18. 听众接口（考试）listener 位置
+    19. Servlet 读取初始化参数：ServletContext  context.getInitParaemeter(String);
+    20. Servlet, ServletContext, ServletConfig, request, response
+    21. 获取servlet组件的初始化值
+    22. struts1.0  vs  struts2.0
+    23. spring 容器, Ioc, DI选择题
+    24. singleton vs prototype 必考（spring bean作用域）
 */
 
 ```
@@ -1234,6 +1248,8 @@ Cart cart = (Cart) ctx.lookup("/ABC/XYZ/mycart");
 ***
 ## struts 框架
 *org.apache.struts.actions.DispatchAction(源代码重点)*
+
+*DispatchAction处理函数映射的机制与流程（eg计算器），问答题，详细叙述*
     
     --> 类似与 Servlet 中的 service 根据 method 分发为 doGet, doPost
 
@@ -1250,9 +1266,13 @@ a rapid framework for web development based on JavaEE
 org.apache.struts.action
     Action 类
 
-前端控制器 org.apache.struts.ActionServlet
+前端控制器 org.apache.struts.action.ActionServlet
 
 前端控制器的流程、职责（考试）
+
+后端控制器是单实例的（考试）
+
+前端控制器处理输入数据，封装成 Beans 对象
 
     --> ActionServlet 前端控制器
     --> struts框架主要实现 ActionForward函数
@@ -1305,3 +1325,595 @@ String method = request.getParameter("method");
 Method m = calc.getClass().getMethod(method);
 
 m.invoke(m, 5, 6);
+
+***
+## struts 再讲
+controller 控制软件运行的流程，映射成 mapping
+
+考试：如何导入一个 struts 工程
+#### 建立基于 struts 的web程序
+1. 项目结构
+```xml
+c:\abc\s1
+    WEB-INF
+        classes
+        lib
+        web.xml
+```
+
+2. 导入 struts
+```xml
+import struts 1, www.apache.org 
+    
+    unzip, apps, docs, lib,
+    
+    copy jars to WEB-INF/lib
+```
+
+3. 编辑 web.xml, deploy ActionServlet(Front Controller)
+```xml
+<!-- web.xml -->
+<web-app>
+    <servlet>
+        <servlet-name>s</servlet-name>
+        <!-- 类名考过，选择题 -->
+        <!-- 命名规范：包名小写，类名大写 -->
+        <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
+        <init-param>
+            <!-- 配置信息 -->
+            <!-- struts 配置主要是关于后端控制器的 -->
+            <!-- 读取的信息放到 Map中，key 值是String, 可以根据url地址获取key值 -->
+            <param-name>config</param-name>
+            <!-- struts 配置文件名可以修改 -->
+            <param-value>/WEB-INF/struts-config.xml</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>s</servlet-name>
+        <!-- 方式一：<url-pattern>/do/*</url-pattern> -->
+        <!-- 方式二：使用后缀识别，.do文件类型访问前端控制器 -->
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+</web-app>
+
+```
+
+前端控制器类如何加载后端控制器类
+
+```java
+ActionServlet{
+    public void service(request, response){
+        // 方法一，使用 Action
+        Action a = (Action) ...;
+        a.execute(...);
+        
+        // 方法二：不使用 Action, 使用反射机制
+        Object o = Beans.instantiate(){
+            getClass().getClassLoader(),
+            className       // className在配置文件中
+        };
+        Method method = o.getClass().getMethod(methodName);
+        method.invoke(a, ...);
+        
+        // 区别
+        // 方法一：快，眼中依赖 Action，耦合性强(struts1)
+        // 方法二：耦合性弱
+    }
+}
+```
+
+3. 写 Action
+```java
+Action,
+    
+// Struts 后端控制器的根类：Action类
+// request 提交处理不了的请求
+public class AddAction extends Action{
+    public ActionForward execute(ActionMapping mapping,ActionForm form,HttpServletRequest request,HttpServletResponse response) throws Exception{
+        CalcForm form = (CalcForm) form;
+        int i = Integer.parseInt(form.getV1());     // 输入数据
+        int j = Integer.parseInt(form.getV2());
+        
+        Calc c = new Calc();
+        int result = c.add(i, j);
+        form.setResult("" + result);
+        
+        ActionForward r = mapping.findForward("result");
+        return r;
+    }
+}
+```
+
+struts-config.xml
+```xml
+<struct-config>
+
+    <!-- 不考 -->
+    <formBean>
+    </formBean>
+
+
+<action-mapping type="">
+
+    <action path="/welcome" forward="/welcome.jsp">
+        <set-property property="example" value="" /> 
+    </action>
+
+    <!-- add.do 已经在前端控制器类中筛选 -->
+    <action type="AddAction" path="/add" name="calcForm">
+        <!-- 输出页面 -->
+        <forward name="result" path="result.jsp" />
+    </action>
+</action-mapping>
+</struct-config>
+```
+
+CalcForm 类
+```java
+public class CalcForm extends ActionForm{
+    // 最好使用 String, 用 int 转换时可能出现前端异常
+    // 数据处理最好不要让前端处理，逻辑放到后端
+    private String v1, v2, result;  
+    
+    public String getV1(){
+        return v1;
+    }
+    
+    public void setV1(String v1){
+        this.v1 = v1;
+    }
+    // 提高 public String getV1() 复用性
+}
+```
+
+提高 public String getV1() 复用性
+```java
+public class DynaActioinForm extends ActionForm{
+    private Map<String, Object> data; 
+    
+    public Object get(String name){
+        return data.get(name);
+    }
+    
+    public void set(String v1, Object value){
+        map.put(v1, value);
+    }
+}
+```
+
+
+#### 降低后端控制器的action
+*org.apache.struts.actions.DispatchAction(源代码重点)*
+
+群里代码
+
+DispatchAction
+
+
+
+***
+maven
+
+类: Beans.instantiate();
+
+java 的反射机制
+
+
+
+*** 
+## struts 后讲
+java 资源文件是 properties
+    
+    --> java.util.ResourceBundle 管理资源包
+    --> java.util.ResourceBundle("s4", new Locale("zh", "CN"));
+    --> 国际化，多语言显示时，可以写入不同的资源文件，根据地址选择不同的资源文件
+
+代码复用
+```java
+// 工具类，业务逻辑
+// 继承
+// AOP 编程：在两段代码中，只有一行代码，前后代码复用，可以使用AOP 编程
+
+```
+
+html 格式
+
+    -->物理格式： 只有一个根元素
+    -->逻辑格式： 应用逻辑决定存在的元素是否合法 (dtd, xsd<类型丰富>文件检查逻辑格式)
+    
+    
+#### struts1 和 struts2 的区别(选择题)，网上找一下
+```java
+// struts1 Action 函数中有HttpServletRequest, HttpServletResponse
+// struts2 中没有
+// struts1 中 ActionForward r = mapping.findForward("result");   return r; 
+// struts2 中 直接返回 return "result"; Action 函数 参数没有 ActionMapping map
+// struts2 将ActionForm 与 Action 合并在一起
+// struts2 缺点：多实例， struts1 是单实例的
+```
+
+
+#### struts2 的配置文件
+```xml
+<action type="s4.CalcAction" path="calc" method="add" />
+
+
+```
+
+
+
+*** 
+mvc 设计模式
+
+struts commmand命令
+
+jiveforum 软件，汉化过程就是重写资源包
+
+native2ascii 软件，转换文本文件的编码
+
+***
+
+## Spring 框架
+核心概念：Ioc, AOP
+
+容器，两个对象之间的依赖关系转到对象与容器的依赖关系
+#### Ioc（必考）
+控制反转  -->  松耦合
+
+DI（必考）: 依赖注入，即组件之间的依赖关系由容器在运行期决定，形象地说，即由容器动态地将某种依赖关系注入到组件之中。
+
+#### 初始化函数与构造函数的区别
+构造函数创建类的过程中消耗比较多的内存
+
+初始化可多次调用
+
+#### 新建Spring 工程
+org.springframework.context   
+    --> ApplicationContext
+    --> 封装了资源文件
+
+```java
+spring framework
+JavaEE platform
+
+A a = new A();
+
+// 类加载器 getClass().getClassLoader()
+// java 根类， java.lang.Object
+// java 源类， java.lang.Class，虚拟机加载几个类，内存中就有几个Class类
+Object java.beans.Beans.instantiate(ClassLoader c1, String className);
+
+A a = new A();
+Object o = Beans.instantiate(getClass().getClassLoader(), "A")  //运行时创建对象，返回Object
+
+BeanFactory 接口
+
+考试：ApplicationContext 接口
+      FileSystemXmlApplicationContext  类，构造函数，读取xml文件参数，构造 Bean 组件，启动比较慢，可以延迟，没必要，支持多个配置文件，（文件系统）可以使用绝对路径和相对路径，new创建，不可以打包到jar
+      ClassPathXmlApplicationContext 类，比FileSystem推荐使用, 可以归档到jar包，使用ClassLoader.instantiate 创建
+
+```
+创建spring 应该放到 listener 中
+```xml
+<listener
+```
+
+听众接口 servelt.context.listener {servlet init,servlet destory}
+
+ContextLoaderListener implements ServletContextListener
+
+读取配置文件中的 listenerlocation
+```java
+public class ContextLoaderListener implements ServletContextListener{
+    public void contextInitialized(ServletContextEvent sce){
+        ServletContext cxt = sce.getServletContext();
+        
+        // 获取 xml 配置文件中的内容
+        String xmlFile = context.getInitParameter("contextConfigLocation");
+        
+        XmlWebApplicationContext ac = new XmlWebApplicationContext;
+    }
+}
+```
+
+*声明 listener 和 读取初始化参数*
+
+#### 读取servlet 初始化参数
+```xml
+<web-app>
+    <servlet>
+        <servlet-name>a</servlet-name>
+        <servlet-class>a.AServlet</servlet-class>
+        <init-param>
+            <param-name>servlet</param-name>
+            <param-value>www.baidu.com</param-value>
+        </init-param>   
+    </servlet>
+</web-app>
+
+```
+
+```xml
+<context-param>
+    <param-name>contextConfigLocation</param-name>
+    <!-- *表示可以多配置文件 -->
+    <param-value>classpath*:/resources/spring/*applicationContext.xml</param-value>
+</context-param>
+```
+
+```java
+doGet(){
+    String value = getInitParameter("servlet");
+    
+    // 或者
+    // HttpServlet 实现了
+    // 读取Servlet的配置参数
+    ServletContext/ServletConfig接口
+    String value = getServletConfig().getInitParameter("servlet");
+    
+    // 读取整个应用参数
+    getServletContext().getInitParameter("contextConfigLocation");
+}
+```
+
+#### AOP
+Spring 文档
+
+    --> 切面（不是面向对象）
+    --> 连接点 
+    --> 切点（集）
+    --> 增强（advance, 执行的关键函数）
+
+
+
+***
+简单工厂模式、抽象工厂模式、抽象工厂方法
+
+
+***
+## Spring 再讲
+#### 理解FileSystemXmlApplicationContext & ClassPathXmlApplication
+考试：FileSystemXmlApplicationContext 与 ClassPathXmlApplication 加载文件的区别：
+
+new FileSystemXmlApplicationContext("d://beans.xml");
+
+new FileSystemXmlApplicationContext("beans.xml");   先读配置文件，需要明确文件在哪
+
+ClassPathXmlApplication 把文件放到Class包中就行，推荐使用，beans.xml 和 class文件放到一起
+
+
+#### 理解 XmlWebApp
+new(启动Web程序，new对象) --> ServletContext 对象 --> ServletContextEvent --> ServletListener(定义的事件处理函数：contextInitialized, contextDestroyed) 
+
+servletconfig 是加载组件后才生成的
+
+一个 Web 程序就有一个 ServletContext(不考虑分布式)
+
+Listener 也是一个组件，客户端不需要访问，不需要Listener-Mapping，也需要部署到 web.xml
+```xml
+<web-app>
+    <listener>
+        <listener-class>SpringContextListener</listener-class>
+    </listener>
+    
+    
+    <servlet>
+    
+        <!-- 组件中的 init, 存在 ServletConfig -->
+        <!-- 使用 获取初始化值函数获取 -->
+        <init-param>
+            <param-name>x</param-name>
+            <param-value>1</param-value>
+        </init-param>
+    </servlet>
+</web-app>
+```
+
+```java
+    public     interface ServletContextListener{
+        public void contextInitialized(ServletContextEvent sce){
+            // 命名服务
+            Context cxt = new InitialContext();
+            // 本地数据源
+            DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/ExamDB");
+            // 将数据源ds存储在 ServletContext
+            // ServletContext sc = (ServletContext) sce.getSource();  // java代码，太过复杂
+            ServletContext sc = sce.getServletContext();    // j2ee代码，两个等价
+            
+        }
+        
+        public void contextDestroyed(ServletContextEvent sce){}
+    }
+    
+```
+
+#### 理解 JavaEE Web Application 集成 struts
+
+#### 理解 JaveEE Web Application 如何集成 Spring框架（考试重点，分值大）
+ContextLoaderListener 实现什么接口 ServletContextListener
+
+如何读取配置文件 
+```xml
+<context-param>
+    <param-name>ServletConfigLocation</param-name>
+    <!-- classpath: 推荐使用 -->
+    <!-- classpath*: 更慢，谨慎使用，从所有的类加载路径中找spring配置文件，比如jar包-->
+    <param-value>classpath*:/resources/spring/*applicationContext.xml</param-value>
+</context-param>
+```
+
+
+#### 理解Spring framework 配置
+通常 ApplicationContext.xml
+```xml
+<beans>
+    <!-- id标识符唯一 -->
+    <bean id="a" class="a.b.c.Hello" /> 
+    <!-- name标识符可以重名，不推荐重名 -->
+    <!-- 也可以给同一个bean组件多个名字，不推荐 
+        <bean name="a,b,c" class="" />
+    -->
+    <bean name="a" class="a.b.c.Hello" />
+    
+    <!-- bean组件不给命名的话，spring自动命名，小写
+        <bean class="a.Student" />
+    -->
+    
+    <!-- 工厂方法创建 bean
+        <bean id="clientService" class="examples.ClientService"
+        factory-bean="serviceLocator"
+        factory-name="createInstance" />
+        <!-- 使用 examples.ClientService.createInstance函数创建对象 -->(error?)
+        <!-- 加factory-bean后使用 serviceLocator.createInstance创建 -->
+    -->
+</beans>
+```
+
+bean 的创建可以由构造函数或者延迟创建
+```xml
+<beans>
+    <bean id="beanOne" class="x.y.ThingOne">
+        <contructor-arg ref="beanTwo" type="" name=""/>
+        <contructor-arg ref="beanThree" />
+    </bean>
+    
+    <bean class="x.y.ThingTwo" />
+    <bean class="x.y.ThingThree" />
+</beans>
+```
+
+
+```xml
+<beans>
+    <bean id="exampleBean" class="examples.ExampleBean">
+        <contructor-arg type="int" value="1" />
+        <contructor-arg type="String" value="fe" />
+    </bean>
+</beans>
+```
+
+```xml
+<beans>
+    <bean id="exampleBean" class="examples.ExampleBean">
+        <contructor-arg name="years" value="1" />
+        <contructor-arg name="ultimateAnswer" value="fe" />
+    </bean>
+</beans>
+```
+
+```xml
+<beans>
+    <bean id="exampleBean" class="examples.ExampleBean">
+        <contructor-arg name="years" value="1" />
+        <contructor-arg name="ultimateAnswer" value="fe" />
+    </bean>
+</beans>
+```
+
+
+setter 方法注入
+```xml
+<beans>
+    <bean id="exampleBean" class="examples.ExampleBean">
+        <property name="beanOne">
+            <ref bean="anotherExampleBean" />
+        </property>
+        
+        
+        <property name="beanOne" rel="anotherExampleBean" />
+    </bean>
+</beans>
+```
+
+java 注解实现bean 配置
+```java
+@Configuration
+public class AppConfig{
+    @Bean("myBean", scope="")
+    ...
+}
+```
+
+Spring配置连接池
+```xml
+<bean id="" destroy-method="close">
+    <property name="" value=""/>
+    <property name="" value=""/>
+    <property name="" value=""/>
+    <property name="" value=""/>
+</bean>
+```
+
+
+#### xml 属性 or 子元素
+推荐使用子元素，唯一性的子元素最好使用属性
+```xml
+<student id="201792179">
+    <name>郑翔</name>
+    <grade>3</grade>
+</student>
+```
+
+
+#### ApplicationContext
+获取 ApplicationContext
+1. 全局静态变量
+2. Aware 接口，只有一个函数
+3. 也可以凭借 DI
+
+```java
+public void setApplicationContext(ApplicatoinContext act){
+    this.ApplicationContext = act;
+}
+```
+
+```java
+public interface ApplicationContextAware{
+    public void setApplicationContext(ApplicatoinContext act){
+        this.ApplicatoinContext = act;
+    }
+    
+    public static getApplicatoinContext
+}
+```
+
+WebApplicatoinContextUtils      工具类中的函数都是静态的
+
+#### bean对象的作用域
+默认是单例模式，只有一个实例
+
+singleton vs prototype 必考
+
+```xml
+<bean id="" class="", scope="" />
+<!-- singleton 单例 -->
+<!-- prototype 模型 -->
+<!-- request  -->
+<!-- session -->
+<!-- application -->
+<!--  -->
+```
+
+#### spring配置文件
+```xml
+<context:annotation-config /><!-- 可以不写 -->
+<context:component-scan base-package="" /><!-- 扫描 -->
+
+<!--spring对配置文件的加载-->
+<context:property-placeholderlocation="classpath:jdbc.proerties" /><!-- 最多出现一次 -->
+<!-- 加载多个 class="org.springframework.beans.factory.config.Properties" -->
+
+
+<!--注解，在Bean中注入-->
+<!--@Value("${abc}")，自动完成类型转换    -->
+<!--private String abc;-->
+```
+
+
+***
+第九周周五：考试        11.1    网安
+第十周周四：考试        11.7    j2ee
+第十周周一：大作业      11.4    ros
+第十周周三：考试        11.6    网络综合实验
+第九周周五：大作业      11.1    可视化
