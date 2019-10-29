@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .checkbox-wrap {
+            width: 90%;
+            position: relative;
+            margin: 0 auto;
+            top: 30%;
+            height: 40%;
+            background-color: white;
+        }
+        
+        input[type="checkbox"] {
+            /*
+            display: none;这样会让tab键无法选取自定义的checkbox，所以使用下面的方法
+            clip 属性剪裁绝对定位元素。
+            */
+            position: absolute;
+            clip: rect(0, 0, 0, 0)
+        }
+        
+        input[type="checkbox"]+.circle,
+        input[type="checkbox"]+.square,
+        input[type="checkbox"]+.mark {
+            display: inline-block;
+            width: 48%;
+            margin-top: 10px;
+            margin-left: 5px;
+            text-align: left;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+        }
+        /*圆形checkbox*/
+        
+        .circle::before {
+            content: "";
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #EEE;
+            vertical-align: middle;
+            margin-right: 5px;
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            transition: background ease-in .5s;
+        }
+        
+        input[type="checkbox"]:checked+.circle::before {
+            background-color: rgb(53, 183, 111);
+            border: 5px #EEE solid;
+        }
+        /*方形checkbox*/
+        
+        .square::before {
+            content: '';
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #EEE;
+            vertical-align: middle;
+            margin-right: 5px;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            transition: background ease-in .5s;
+        }
+        
+        input[type="checkbox"]:checked+.square::before {
+            background-color: #FA8E53;
+            border: 5px #EEE solid;
+        }
+        /*打勾checkbox*/
+        
+        .mark::before {
+            content: '\a0';
+            display: inline-block;
+            border: 1px solid silver;
+            text-align: center;
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+        
+        input[type="checkbox"]:checked+.mark::before {
+            content: '\2713';
+            color: #FA8E53;
+        }
+        /*开关式checkbox*/
+        
+        .sc {
+            margin-left: 20px;
+        }
+        /*no1*/
+        
+        .sc1 {
+            width: 40px;
+            height: 10px;
+            background: #555;
+            /*margin: 20px 80px;*/
+            position: relative;
+            border-radius: 3px;
+        }
+        
+        .sc1 .switch {
+            display: block;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            -webkit-transition: all .4s ease;
+            -moz-transition: all .4s ease;
+            -o-transition: all .4s ease;
+            -ms-transition: all .4s ease;
+            transition: all .4s ease;
+            cursor: pointer;
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            background: #FA8E53;
+        }
+        
+        .sc1 input[type=checkbox]:checked+label {
+            left: 27px;
+        }
+        /*no2*/
+        
+        .sc2 {
+            background: #333;
+            width: 116px;
+            height: 40px;
+            border-radius: 20px;
+            position: absolute;
+        }
+        
+        .sc2:before {
+            content: '';
+            position: absolute;
+            top: 19px;
+            left: 14px;
+            height: 2px;
+            width: 90px;
+            background: #d4d4d4;
+        }
+        
+        .sc2 .switch {
+            display: block;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            -webkit-transition: all .5s ease;
+            -moz-transition: all .5s ease;
+            -o-transition: all .5s ease;
+            -ms-transition: all .5s ease;
+            transition: all .5s ease;
+            cursor: pointer;
+            position: absolute;
+            top: 9px;
+            z-index: 1;
+            left: 12px;
+            background: #fff;
+        }
+        
+        .sc2 input[type=checkbox]:checked+.switch {
+            left: 84px;
+            background: #FA8E53;
+        }
+        /*no3*/
+        
+        .sc3 {
+            width: 120px;
+            height: 40px;
+            background: #333;
+            margin: 20px 60px;
+            border-radius: 50px;
+            position: relative;
+        }
+        
+        .sc3::before {
+            content: 'On';
+            position: absolute;
+            top: 12px;
+            left: 13px;
+            height: 2px;
+            color: #FA8E53;
+            font-size: 16px;
+        }
+        
+        .sc3::after {
+            content: 'Off';
+            position: absolute;
+            top: 12px;
+            left: 84px;
+            height: 2px;
+            color: #ddd;
+            font-size: 16px;
+        }
+        
+        .sc3 .switch {
+            display: block;
+            width: 52px;
+            height: 22px;
+            border-radius: 50px;
+            -webkit-transition: all .5s ease;
+            -moz-transition: all .5s ease;
+            -o-transition: all .5s ease;
+            -ms-transition: all .5s ease;
+            transition: all .5s ease;
+            cursor: pointer;
+            position: absolute;
+            top: 9px;
+            z-index: 1;
+            left: 12px;
+            background: #ddd;
+        }
+        
+        .sc3 input[type=checkbox]:checked+.switch {
+            left: 60px;
+            background: #FA8E53;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>圆形CheckBox</h3>
+    <div class="checkbox-wrap">
+        <input type="checkbox" value="circlecheckbox1" id="circlecheckbox1">
+        <label class="circle" for="circlecheckbox1">circlecheckbox1</label>
+
+        <input type="checkbox" value="circlecheckbox2" id="circlecheckbox2">
+        <label class="circle" for="circlecheckbox2">circlecheckbox2</label>
+
+        <input type="checkbox" value="circlecheckbox3" id="circlecheckbox3">
+        <label class="circle" for="circlecheckbox3">circlecheckbox3</label>
+
+        <input type="checkbox" value="circlecheckbox4" id="circlecheckbox4">
+        <label class="circle" for="circlecheckbox4">circlecheckbox4</label>
+    </div>
+    <hr>
+    <h3>方形CheckBox</h3>
+    <div class="checkbox-wrap">
+        <input type="checkbox" value="squarecheckbox1" id="squarecheckbox1">
+        <label class="square" for="squarecheckbox1">squarecheckbox1</label>
+
+        <input type="checkbox" value="squarecheckbox2" id="squarecheckbox2">
+        <label class="square" for="squarecheckbox2">squarecheckbox2</label>
+
+        <input type="checkbox" value="squarecheckbox3" id="squarecheckbox3">
+        <label class="square" for="squarecheckbox3">squarecheckbox3</label>
+
+        <input type="checkbox" value="squarecheckbox4" id="squarecheckbox4">
+        <label class="square" for="squarecheckbox4">squarecheckbox4</label>
+    </div>
+    <hr>
+    <h3>勾状CheckBox</h3>
+    <div class="checkbox-wrap">
+        <input type="checkbox" value="markcheckbox1" id="markcheckbox1">
+        <label class="mark" for="markcheckbox1">markcheckbox1</label>
+
+        <input type="checkbox" value="markcheckbox2" id="markcheckbox2">
+        <label class="mark" for="markcheckbox2">markcheckbox2</label>
+
+        <input type="checkbox" value="markcheckbox3" id="markcheckbox3">
+        <label class="mark" for="markcheckbox3">markcheckbox3</label>
+
+        <input type="checkbox" value="markcheckbox4" id="markcheckbox4">
+        <label class="mark" for="markcheckbox4">markcheckbox4</label>
+    </div>
+    <hr>
+    <h3>开关式CheckBox</h3>
+    <div class="checkbox-wrap">
+        <div class="sc1  sc">
+            <input type="checkbox" value="switchcheckbox1" id="switchcheckbox1">
+            <label class="switch" for="switchcheckbox1"></label>
+        </div>
+        <br><br>
+        <div class="sc2  sc">
+            <input type="checkbox" value="switchcheckbox2" id="switchcheckbox2">
+            <label class="switch" for="switchcheckbox2"></label>
+        </div>
+        <br><br>
+        <div class="sc3  sc">
+            <input type="checkbox" value="switchcheckbox3" id="switchcheckbox3">
+            <label class="switch" for="switchcheckbox3"></label>
+        </div>
+    </div>
+</body>
+
+</html>

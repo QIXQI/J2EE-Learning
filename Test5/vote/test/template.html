@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- <script type="text/javascript" src="../javascript/template.js" defer></script> -->
+        <title>template学习</title>
+    </head>
+    <body>
+        <div id="wp"></div>
+        <script id="tpl" type="text/html">
+            <ul>
+                <%for(var i in items){%>   
+                    <li>
+                    name:<%=items[i].name%>    val:<%=items[i].val%>
+                    </li>
+                <%}%>
+            </ul>
+        </script>
+        <script src="../javascript/template.js"></script>
+        <script>
+            var data={
+                items:[{'name':'名字一','val':'数据一'},
+                {'name':'名字二','val':'数据二'},
+                {'name':'名字三','val':'数据三'},
+                {'name':'名字四','val':'数据四'}]
+            }
+            var html = template(document.getElementById('tpl').innerHTML,data);
+            document.getElementById('wp').innerHTML = html;
+        </script>
+    </body>
+</html>

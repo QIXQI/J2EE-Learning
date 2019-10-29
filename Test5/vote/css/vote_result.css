@@ -1,0 +1,90 @@
+#bar{
+    width: 600px;
+    height: 400px;
+    margin-top: 40px;
+    margin-left: 400px;
+}
+
+#sex{
+    display: block;
+    position: absolute;
+    width: 500px;
+    height: 320px;
+    margin-top: -20px;
+}
+
+#sex_pie{
+    width: 500px;
+    height: 320px;
+}
+
+#male_bar{
+    display: none;
+    width: 500px;
+    height: 320px;
+}
+
+#female_bar{
+    display: none;
+    /* width: 500px; */
+    width: 300px;
+    height: 320px;
+    margin-left: 100px;
+}
+
+#age{
+    display: block;
+    position: absolute;
+    margin-left: 900px;
+    width: 500px;
+    height: 320px;
+    margin-top: -20px;
+}
+
+#age_pie{
+    width: 500px;
+    height: 320px;
+}
+
+#age_20s_bar{
+    display: none;
+    width: 220px;
+    height: 320px;
+    margin-left: 130px;
+}
+
+#age_30s_bar{
+    display: none;
+    width: 500px;
+    height: 320px;
+}
+
+#age_40s_bar{
+    display: none;
+    width: 500px;
+    height: 320px;
+}
+
+#age_50s_bar{
+    display: none;
+    width: 500px;
+    height: 320px;
+}
+
+#refresh{
+    /* background-color: yellow; */
+    position: absolute;
+    display: block;
+    width: 60px;
+    height: 60px;
+    right: 10%;
+    top: 10%;
+    padding-top: 5px;
+    padding-left: 5px;
+    cursor: pointer;
+}
+
+#refresh img{
+    width: 55px;
+    height: 55px;
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <Resource name="jdbc/vote" 
+        auth="Container"
+        type="javax.sql.DataSource"
+        driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://localhost:3306/j2ee"
+        username="root"
+        password=""
+        maxActive="100"
+        maxTotal="100"
+        maxIdle="30"
+        maxWaitMillis="1" />
+</Context>

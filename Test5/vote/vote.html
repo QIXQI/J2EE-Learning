@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Vote</title>
+        <link rel="stylesheet" href="css/vote.css" type="text/css" />
+    </head>
+    <body>
+        <div id="thead">
+            <h2>投票页面</h2>
+            <h5 style="text-align: center">最少投1票，最多投<label class="max_choose_num"></label>票</h5>
+        </div>
+        <div id="tbody">
+            <!-- start of vote.form -->
+            <form action="vote.do" method="post" id="vote_form">
+            <div class="item">
+                <label class="name" for="200492179" ><span>小明</span></label><label class="subject" for="200492179"><span>《工科数学分析》</span></label>
+                <input type="checkbox" name="teacher" value="200492179" id="200492179" />
+                <label class="checkbox" for="200492179" ></label>
+            </div>
+            <div class="item">
+                <label class="name" for="200452170"><span>小红</span></label><label class="subject" for="200452170"><span>《C++程序设计》</span></label>
+                <input type="checkbox" name="teacher" value="200452170" id="200452170" />
+                <label class="checkbox" for="200452170"></label>
+            </div>
+            <div class="item">
+                <label class="name" for="200592355"><span>小华</span></label><label class="subject" for="200592355"><span>《毛泽东思想》</span></label>
+                <input type="checkbox" name="teacher" value="200592355" id="200592355" />
+                <label class="checkbox" for="200592355"></label>
+            </div>
+            <div class="item">
+                <label class="name" for="200892345"><span>小蓝</span></label><label class="subject" for="200892345"><span>《离散数学》</span></label>
+                <input type="checkbox" name="teacher" value="200892345" id="200892345" />
+                <label class="checkbox" for="200892345"></label>
+            </div>
+            <div class="item">
+                <label class="name" for="200392677"><span>小波</span></label><label class="subject" for="200392677"><span>《概率与统计》</span></label>
+                <input type="checkbox" name="teacher" value="200392677" id="200392677" />
+                <label class="checkbox" for="200392677"></label>
+            </div>
+            <div class="item">
+                <label class="name" for="200234145"><span>小李</span></label><label class="subject" for="200234145"><span>《近代史纲要》</span></label>
+                <input type="checkbox" name="teacher" value="200234145" id="200234145" />
+                <label class="checkbox" for="200234145"></label>
+            </div>
+            <div class="item">
+                <label class="name" for="200563871"><span>小杰</span></label><label class="subject" for="200563871"><span>《计算机网络》</span></label>
+                <input type="checkbox" name="teacher" value="200563871" id="200563871" />
+                <label class="checkbox" for="200563871"></label>
+            </div>
+            <div class="item">
+                <label class="name" for="200795026"><span>小莉</span></label><label class="subject" for="200795026"><span>《操作系统》</span></label>
+                <input type="checkbox" name="teacher" value="200795026" id="200795026" />
+                <label class="checkbox" for="200795026"></label>
+            </div>
+            <div id="vote_submit">
+                <button type="submit">
+                    <img src="images/vote.png" alt="投票" title="投票" />
+                </button>
+            </div>
+            </form>
+            <!-- end of vote.form -->
+        </div>
+        <div id="tfoot"></div>
+        <script type="text/javascript" src="javascript/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript" src="javascript/template.js"></script>
+        <script type="text/javascript" src="javascript/vote.js"></script>
+    </body>
+</html>

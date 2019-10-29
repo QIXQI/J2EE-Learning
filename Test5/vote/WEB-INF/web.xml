@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+        http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    id="vote" version="2.5">
+    <!-- <absolute-ordering /> 多模块开发-->
+
+    <servlet>
+        <servlet-name>springmvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/config/springmvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>springmvc</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+
+    <!-- 优先级：setMaxInactiveInterval(秒) > /WEB-INF/web.xml > Tomcat/conf/web.xml -->
+    <session-config>
+        <!-- 客户端连续两次与服务器交互间隔时间最长为10分钟 -->
+        <session-timeout>10</session-timeout>
+    </session-config>
+
+    <!-- 欢迎页面 -->
+    <welcome-file-list>
+        <!-- 优先级最高 -->
+        <welcome-file>vote.html</welcome-file>
+        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.htm</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>index.php</welcome-file>
+        <welcome-file>index</welcome-file>  <!-- 可能是 Servlet -->
+    </welcome-file-list>
+</web-app>

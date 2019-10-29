@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>javascript 获取session</title>
+    </head>
+    <body>
+        <div id="main">session</div>
+        <script src="https://localhost:8443/vote/javascript/jquery-3.4.1.min.js" type="text/javascript"></script>
+        <script>
+            function getUser(){
+                console.log(window.location.host);
+                $.ajax({
+                    url: 'https://localhost:8443/vote/getSession.do',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data){
+                        if(data == 'new'){
+                            // alert('new');
+                            console.log('new');
+                            // window.location.href = 'https://localhost:8443/vote';
+                        }else{
+                            /* dataType: json */
+                            console.log(data);
+                            console.log(JSON.parse(data.id));       // data.id 不是 json对象，必须 JSON.parse()
+                            console.log(JSON.parse(data.teachers));
+                            // console.log(JSON.parse(data.teachers));
+                            console.log(JSON.parse(data.vote_numbers));
+                            console.log(JSON.parse(data.sex));
+                            console.log(JSON.parse(data.age));
+                            console.log(JSON.parse(data.sex_numbers));
+                            console.log(JSON.parse(data.age_numbers));
+                            var temp = [{name: 'male', value: 8}, {name: 'female', value:19}];
+                            console.log(temp);
+                            console.log(JSON.parse(data.sex_numbers));
+                            if(compareObject(temp, JSON.parse(data.sex_numbers))){
+                                console.log('yes');
+                            }else{
+                                console.log('no');
+                            }
+
+
+
+                            /* dataType: text */
+                            // jsonData = JSON.parse(data);
+                            // console.log(data);
+                            // console.log(jsonData);
+                            // console.log(jsonData.id);
+                            // console.log(jsonData.teachers);
+                            // console.log(jsonData.vote_numbers);
+                            // console.log(jsonData.sex);
+                            // console.log(jsonData.age);
+                            // console.log(jsonData.sex_numbers);
+                            // console.log(jsonData.age_numbers);
+                            // var temp = [{'name': 'male', 'value': 8}, {'name': 'female', "value": 19}];
+                            // console.log(temp);
+                            // if(compareObject(temp, JSON.parse(jsonData.sex_numbers))){
+                            //     console.log('yes')
+                            // }else{
+                            //     console.log('no')
+                            // }
+                            // console.log(JSON.parse(jsonData.sex_numbers))
+                            // window.location.href = 'https://localhost:8443/vote';
+                        }
+                    },
+                    error: function(err){
+                        alert('出错');
+                        alert(err.responseText);
+                    },
+                })
+            }
+
+            getUser();
+
+
+            // 判断是否是同一个对象
+            function compareObject(o1,o2){
+                if(typeof o1 != typeof o2)return false;
+                if(typeof o1 == 'object'){
+                    for(var o in o1){
+                        if(typeof o2[o] == 'undefined')return false;
+                        if(!compareObject(o1[o],o2[o]))return false;
+                    }
+                    return true;
+                }else{
+                    return o1 === o2;
+                }
+            }
+
+        </script>
+    </body>
+</html>

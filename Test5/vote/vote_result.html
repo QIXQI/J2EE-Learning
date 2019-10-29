@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="css/vote_result.css" type="text/css" />
+        <title>投票结果</title>
+    </head>
+    <body>
+        <!-- 为 echarts 柱状图准备一个具备长宽的 DOM -->
+        <div id="refresh">
+            <img src="images/refresh.png" alt="refresh" title="refresh" />
+        </div>
+        <div id="bar"></div>
+        <div id="sex">
+            <div id="sex_pie"></div>
+            <div id="male_bar"></div>
+            <div id="female_bar"></div>
+        </div>
+        <div id="age">
+            <div id="age_pie"></div>
+            <div id="age_20s_bar"></div>
+            <div id="age_30s_bar"></div>
+            <div id="age_40s_bar"></div>
+            <div id="age_50s_bar"></div>
+        </div>
+        <script type="text/javascript" src="javascript/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript" src="javascript/echarts.js"></script>
+        <script type="text/javascript" src="javascript/vote_result.js"></script>
+    </body>
+</html>
