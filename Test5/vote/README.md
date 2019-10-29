@@ -18,3 +18,9 @@ javac -Djava.ext.dirs=lib/ src/club/qixqi/vote/*.java
 ## Problem
 #### /config/springmvc.xml
 视图解析器 InternalResourceViewResolver 为什么能访问到 /WEB-INF/jsp/下的文件，还是只是浏览器不能通过 url 访问 /WEB-INF/jsp/ 下的文件
+
+
+
+## 后续
+
+使用 redis 缓存数据，nginx + tomcat 集群，自定义投票系统等。
