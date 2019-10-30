@@ -31,7 +31,7 @@ $(document).ready(function(){
             url: 'https://localhost:8443/vote/getSession.do',
             type: 'GET',
             dataType: 'json',
-            async: false,   // 同步执行
+            async: true,   // 异步执行
             success: function(data){
                 id = JSON.parse(data.id);
                 teachers = JSON.parse(data.teachers);
@@ -48,6 +48,7 @@ $(document).ready(function(){
                 console.log(age);
                 console.log(sex_numbers);
                 console.log(age_numbers);
+                init_view();        // 响应成功刷新页面
             },
             error: function(err){
                 window.location.href = './result_error.html';
@@ -370,14 +371,14 @@ $(document).ready(function(){
 
     // 调用函数
     getSession();
-    init_view();
+    // init_view();
 
     // 刷新
     // 点击刷新
     $("#refresh").click(function(){
         // alert('refresh');
         getSession();
-        init_view();
+        // init_view();
     });
     // 定时刷新
     // $('body').everyTime('1s', 'time_refresh', function(){       // 计时器名称：time_refresh
@@ -386,6 +387,6 @@ $(document).ready(function(){
     setInterval(function(){         // 每s执行一次
         // console.log('everyTime');
         getSession();
-        init_view();
+        // init_view();
     }, 10000);   
 });
