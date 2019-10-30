@@ -26,6 +26,6 @@
 
   by vscode
 
-第五次上机实现投票系统，10秒刷新一次，也可以手动刷新。使用spring mvc 框架，mysql数据库，html前端, echarts.js渲染结果，利用ajax获取 session
+第五次上机实现投票系统，10秒刷新一次，也可以手动刷新。使用spring mvc 框架，mysql数据库，html前端, echarts.js渲染结果，利用ajax异步刷新获取 session
 
 效果：https://qixqi.club:8443/vote
