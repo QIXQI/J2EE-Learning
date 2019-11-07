@@ -12,8 +12,8 @@
     10.org.apache.struts.actions.DispatchAction(源代码）
     11.考试题：两个代码性能分析对比（简单题）
     12.考试重点: Servlet, Listener, Filter, JSP, Tag, ServletConfig, ServletContext;
-    13. 重重点： Servlet, ServletConfig
     14. 声明周期： getInitParameter()
+    13. 重重点： Servlet, ServletConfig
     15. request.getParameter()
     16. 10月12日 周四 上传文件（反射机制），要考
     17. 选择题、填空题、问答题
@@ -24,6 +24,14 @@
     22. struts1.0  vs  struts2.0
     23. spring 容器, Ioc, DI选择题
     24. singleton vs prototype 必考（spring bean作用域）
+    25. org.springframework.web.context.ContextLoaderListener 实现哪个接口（ServletContextListener)
+    26. 考试考 ServletContextListener
+    27. 获取 web.xml 中<servlet>中的初始化值，在servlet组件中使用函数 getInitParameter(param_name)读取
+    28. 叙述servlet 的映射规则
+    29. Controller：将用户输入的动作 Mapping(映射到) 模型中的执行
+    30. mvc2: 2代表 Controller 依赖 View, Model，前端控制器是可以复用的
+    31. 考试20分问答题
+    32. Map<String, ?> model 参数的优点和缺点
 */
 
 ```
@@ -1913,7 +1921,422 @@ singleton vs prototype 必考
 
 ***
 第九周周五：考试        11.1    网安
+
 第十周周四：考试        11.7    j2ee
+
 第十周周一：大作业      11.4    ros
+
 第十周周三：考试        11.6    网络综合实验
-第九周周五：大作业      11.1    可视化
+
+第九周周五：大作业      11.16    可视化  纸质版  信息楼   319  交到没写名字的一排
+
+***
+
+## Spring mvc
+mvc设计模式，具有图形的应用程序，视图与业务逻辑
+
+控制器的主要功能时 Mapping，控制视图和业务逻辑的映射
+
+```xml
+<web-app>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoader</listener-class>
+    </listener>
+    <context-param>
+        <param-name>contextConfigLoaction</param-name>
+        <param-value>/WEB-INF/conf/spring.xml</param-value>
+    </context-param>
+</web-app>
+```
+
+```java
+// 读取 context-param 中的spring配置文件
+public class ContextLoaderListener implements ServletContextLoader{
+    public void contextInitialized(ServletContextEvent sce){
+        String filename = sce.getServletContext().getInitParameter("contextConfigLocation");
+        
+        // Servlet, ServletConfig, HttpServlet, ServletContext
+    }
+}
+```
+
+
+#### web.xml 中导入前端
+HttpServlet 实现 Servlet接口和 ServletContext接口
+
+```xml
+<!-- web.xml -->
+<!-- 这个子元素必须有，Servlet容器新增加的特性，支持多模块开发 -->
+<absolute-ordering />
+<servlet>
+    <servlet-name>app</servlet-name>
+    <servlet-class>org.springframework.web.servlet.Dispatcher</servlet-class>
+    <init-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value></param-value>
+        <!--<param-value>/WEB-INF/spring.xml</param-value>-->
+        <!--多个配置文件一<param-value>/WEB-INF/*.xml</param-value>-->
+        <!--多个配置文件二<param-value>/WEB-INF/a.xml, /WEB-INF/b.xml</param-value-->
+        <!--使用类路径即class文件夹<param-value>classpath:a.xml</param-value>-->
+        <!--使用类路径<param-value>classpath*:a.xml</param-value>不推荐使用-->
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+</servlet>
+<servlet-mapping>
+    <servlet-mapping>
+        <!-- servlet 可以映射给多个 url -->
+        <url-pattern>*.do</url-pattern>
+        <url-pattern>*.action</url-pattern>
+        <!--拦截所有 <url-pattern>/</url-pattern> -->
+    </servlet-mapping>
+</servlet-mapping>
+
+```
+
+#### 对比配置文件
+业务逻辑层，不与视图有关
+```xml
+    <context-param>
+        <param-name>contextConfigLoaction</param-name>
+        <param-value>/WEB-INF/conf/spring.xml</param-value>
+    </context-param>
+```
+
+与视图有关
+```xml
+    <init-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/spring.xml</param-value>
+    </init-param>
+```
+
+两者配置一个就行，老师推荐使用前者（好像是）
+
+
+
+#### servlet 映射
+<url-pattern>中的映射优先级下降顺序（易错 /*优先级更高）
+
+a.html
+
+/*
+
+/*.html
+
+/
+
+#### / 和 /* 的区别
+tomcat/conf/web.xml
+
+前端控制器下
+```xml
+<servlet-mapping>
+    <servlet-name>app</servlet-name>
+    <!-- 这里如果时/* 的话，由于 /* 的优先级比 tomcat/conf/web.xml 中的*.jsp的优先级高，前端控制器会拦截jsp文件，这样tomcat就不会处理jsp文件，把jsp文件当作静态资源返回给客户端，不会解析jsp文件，这样客户端显示的就是jsp源码 -->
+    
+    <!-- 方式一 -->
+    <!-- 由于 /的优先级最低，这样jsp又可以解析了 -->
+    <url-pattern>/</url-pattern>
+    
+    <!-- 方式二 -->
+    <!-- 创建子文件夹 -->
+    <url-pattern>/app/*</url-pattern>
+</servlet-mapping>
+```
+
+#### 如何访问静态资源，不让前端控制器起作用
+```xml
+<mvc:resource mapping="/js/**" location="/js/" />
+<!-- 由于 url-pattern 是 /，则WEB-INF/下的静态资源访问需要这样 -->
+<mvc:resource mapping="/css/**" location="/WEB-INF/css/" />
+```
+视图层不应该直接访问，给一个逻辑名，比如 a.jsp，由*.do拦截访问（似乎是这样）
+
+
+
+#### * 和 ** 的区别
+子文件夹下
+```xml
+<mvc:resource mapping="/js/**" location="/js/" .<
+```
+
+
+### spring后端控制器
+spring 配置文件
+```xml
+<!-- 开启mvc -->
+<mvc:annotation-driven />
+
+<!-- 扫描器 -->
+<context:compontent-scan base-package="com.abc.project.controller" />
+```
+
+```java
+// 这种方式不太好
+package com.abc.project.controller;
+
+@Controller
+// 模块开发
+@RequestMapping("/calc")
+public class MyController{
+    @RequestMapping("/add")
+    // 这里 v1必须与什么一样，不然不给你笨蛋注入
+    public String add(String v1, String v2){
+        
+    }
+    
+    @RequestMapping("/substract")
+    public String substract(String v1, String v2){
+        
+    }
+}
+```
+
+```java
+// 这种方式比较好
+下课补吧，泪哭
+```
+
+#### 后端控制器返回对象(8个)
+```java
+public void add(Locale locale, HttpSession session, HttpServeltRequest request, HttpServletResponse response)
+```
+
+session
+
+request
+
+response
+
+locale 国家地区，国际化网页
+
+
+#### 后端控制器注解
+java.util.Locale
+@PathVariable
+
+获取数据
+
+@RequestParam
+
+@RequestHead
+
+@RequestBody    对象与json的转换
+
+@RequetMapping
+
+返回数据
+
+@ResponseBody 
+
+// 将对象转换为 json返回，编码 ISO8859-1(美国国际编码)
+public @ResponseBody List<Student> a(String a){
+    
+}
+```spring.xml
+<!-- spring配置文件修改 ISO8859-1 为 UTF-8 -->
+<mvc:annotation-driven>
+    <mvc:message-
+</mvc:annotation-driven>
+```
+
+
+
+不同的请求方法
+@GetMapping, @PostMapping, @PutMapping, @DeleteMapping 这些都等价于 @RequestMapping ，只是请求方法各异
+
+#### Controller 与 RestController
+RestController 不需要再用 RequestBody, ResponseBody
+
+RestController 返回的都是对象 Object
+
+
+#### @RequestParam(value="v1") 与 @Request("v1")
+两者等价，因为默认值是 value，设置其他属性就不一样了
+
+
+#### spring 对路径灵活
+模版路径 -- 带动态参数的路径
+
+@RequestMapping("/student/{studentid}/modify")
+
+@RequestMapping("/student/modify/{studentid}")
+
+
+#### spring 注入
+spring 是注入技术
+
+```java
+public String a(HttpServletResponse res, HttpServletRequest req){
+    // res和req的顺序没问题
+}
+```
+
+
+***
+Spring 可以将html form表单提交的数据放入 Map中
+
+自己做框架
+
+spring 视图技术 View接口，派发出一堆东西，比如 JSONView, PdfView, ExcelView, 也可以自己写DownloadView
+
+上传文件，给文件一个不重的随机数修改文件名，源文件名与新文件名放入Model,下载时查找Model，找到要下载的文件
+
+将文件名与id存入数据库并将文件名修改id，下载时根据文件名到数据库查找id，找到文件的真实 url
+
+企业自己写View，不如DownloadView
+
+json 面向对象编程
+
+***
+## Spring 后讲
+
+spring mvc 支持的视图技术：freemarker, jsp, groovy, markup
+
+
+
+
+#### jsp 视图技术
+需要下载 jstl-1.2.jar
+```xml
+<bean id="viewResolver" 
+    class="org.springframework.web.servlet.view.In"
+    <property name="viewClass" value="org.springframework." />
+    <property name="prefix" value="/WEB-INF/jsp/" />
+    <property name="suffix" value=".jsp" />
+/>
+```
+控制器只需要返回视图的逻辑名称
+
+如果 controller 什么逻辑也不执行，仅仅是转发到某个试图
+```xml
+<mvc:view-controller path="/jsp/a" view-name="a" />
+```
+现在不能直接访问 jsp文件
+
+a.jsp --> /jsp/a
+
+
+JSP 的视图类org.springframework.web.servlet.view.InternalResourceViewResolver 实现了View, BeanNameAware, ApplicationContextAware, ServletContextAware 接口
+
+ServletContextAware: View 知道WEB容器
+
+ApplicationContextAware: View 知道WEB应用接口，知道应用下的所有组件
+
+自定义视图时要实现这几个接口
+#### 视图解析
+spring 支持多个viewresolve   @Nullable
+
+*考试：*
+org.springframework.web.servlet.View 接口中声明的两个抽象函数
+
+```java
+@Nullable       // 返回值允许为空，spring提供默认类型
+public default String getContentType();
+public void render(@Nullable Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) throws Exception
+```
+
+#### interface 中的 default
+java8 后允许接口中实现函数
+```java
+public interface K{
+    public default void a(){    // public 和 default可以位置互换
+        
+    }
+    void b();
+}
+```
+
+#### 范型
+```java
+// 具体明确
+List<String> list = new ArrayList<String>();
+String s = list.get(0);     // 不需要类型转换，默认好似 Object
+```
+
+```java
+// 语法错误，不明确
+Map<String, Object> map = new HashMap<String, Student>();
+
+Map<String, Object> map = new HashMap<String, Object>();
+
+// ? 匹配任何类型
+Map<String, ?> map = new HashMap<String,?>();
+
+上界 下界
+<String, ?, extend=  >
+<String, ?, super=  >
+```
+
+
+
+#### DownloadView
+```java
+public class DownloadView implements View, ApplicationContextAware, ServletContextAware, BeanNameAware{
+    @Override
+    public String getContentType(){
+        return "application/x-download; charset=utf-8";
+        // return "application/json; charset=utf-8"
+    }
+    
+    @Override
+    *考试：Map<String, ?> 参数的优点和缺点*
+    public void render(Map<String, ?> model, HttpServletRequest)
+}
+```
+
+#### jsonView
+
+#### 文件类型
+1. .html .php
+2. http://localhost:8080/hello?format=xml
+
+#### Ordered 接口
+spring 支持 viewresolver, 使用 order（优先级，整数，值越小优先级越高，0最高）
+
+#### model
+model.addAttribute("username", list);
+
+${list[2]}
+
+${list.key}     // Map
+
+${list.key[2]}  // Map 的value 时数组
+
+前端 --> 拦截器预处理 --> Controller --> ModelAndView --> 拦截器后处理 --> resolveview --> view
+
+
+***
+native2ascii
+
+pdfView, XMlView, jsonView
+
+
+写 excelView
+
+
+***
+## 最后一讲
+spring jdbc 提供了jdbc操作的进一步封装
+
+org.springframework.jdbc.core.JdbcTemplate 类
+
+对象到关系数据库的映射：
+
+O/R Mapping 对象关系映射， Hibernate, MyBatis
+
+Hibernate 慢，不能处理复杂sql语句，MyBatis 快，JDU 效果不好,没有使用反射机制（快，不好）
+
+使用 org.springframework.jdbc 就够了
+
+spring dao 类
+
+```java
+Bag<Apple>b = new Bag<RedApple>();      // 语法错误，范型意味着类型明确，前后不会类型转换，类型不一致
+```
+
+写 MySevice 函数
+
+
+*** 
+学习 MyBatis
